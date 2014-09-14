@@ -869,6 +869,9 @@ $gridster-resizer-size: #{$gridster-padding - 5px};
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
+@import 'arethusa.tei';
+
+
 /***************************************************************************
  *                               Animations                                *
  ***************************************************************************/
@@ -908,4 +911,3 @@ $gridster-resizer-size: #{$gridster-padding - 5px};
 .slide-bottom {
   @include slider(250ms, translateY(60px), translateY(0));
 }
-
