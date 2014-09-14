@@ -12,6 +12,7 @@ var confPath = 'app/static/configs';
 var devMode = process.env.DEV;
 
 var arethusaModules = [
+  "arethusa.tei",
   'arethusa.morph',
   'arethusa.artificial_token',
   'arethusa.core',
