@@ -23,6 +23,8 @@
   "create": "Create",
   "list" : "List",
   "delete" : "Delete",
+  "preview" : "Preview",
+  "submit" : "Submit",
 
   "landing" : {
     "description" : "A backend-independent client-side annotation framework",

@@ -7,20 +7,22 @@
     placeholder="{{ markdownPlaceholder}}"
     ng-model="$parent.comment"/>
   <div ng-if="preview" class="fade-in">
-    <div class="center italic">Preview</div>
+    <div class="center italic">
+      <span translate="preview"/>
+    </div>
     <md ng-if="preview" ng-model="$parent.comment"/>
   </div>
   <span
     ng-disabled="!comment"
     ng-click="submit()"
     class="button micro radius">
-    Submit
+    <span translate="submit"/>
   </span>
 
   <span
     ng-disabled="!comment"
     ng-click="preview = !preview"
     class="button micro radius">
-    Preview
+    <span translate="preview"/>
   </span>
 </form>
