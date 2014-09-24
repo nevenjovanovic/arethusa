@@ -34,28 +34,35 @@ angular.module('arethusa.comments').factory('CommentsRetriever', [
       // without token identifiers.
       if (!id) return comments.document.push(comment);
 
-      var sIdAndWIds = id.split('.');
+      var sentenceSpans = id.split(';');
+      var span;
+      angular.forEach(sentenceSpans, function(spanIds, i) {
+        var sIdAndWIds = spanIds.split('.');
 
-      var sId  = sIdAndWIds[0];
-      var wIds = arethusaUtil.map(sIdAndWIds[1].split(','), function(id) {
-        return idHandler.getId(id, sId);
+        var sId  = sIdAndWIds[0];
+        var wIds = arethusaUtil.map(sIdAndWIds[1].split(','), function(id) {
+          return idHandler.getId(id, sId);
+        });
+
+        if (i === 0) {
+          var arr = arethusaUtil.getProperty(comments, sId);
+          if (!arr) {
+            arr = [];
+            arethusaUtil.setProperty(comments, sId, arr);
+          }
+          span = sameSpan(arr, wIds);
+          if (span) {
+            span.comments.push(comment);
+          } else {
+            // We unshift on purpose - we want newly added comments on runtime to
+            // appear on top of the list.
+            span = new WrappedComment(wIds, comment);
+            arr.unshift(span);
+          }
+        } else {
+          aU.pushAll(span.ids, wIds);
+        }
       });
-
-      var arr = arethusaUtil.getProperty(comments, sId);
-      if (!arr) {
-        arr = [];
-        arethusaUtil.setProperty(comments, sId, arr);
-      }
-
-      var span = sameSpan(arr, wIds);
-      if (span) {
-        span.comments.push(comment);
-      } else {
-        // We unshift on purpose - we want newly added comments on runtime to
-        // appear on top of the list.
-        span = new WrappedComment(wIds, comment);
-        arr.unshift(span);
-      }
       return span;
     }
 
@@ -95,12 +102,11 @@ angular.module('arethusa.comments').factory('CommentsRetriever', [
     }
 
     function addFakeIdsAndStrings(comment) {
-      var sId = comment.sId;
       var ids = comment.ids;
       var sourceIds = arethusaUtil.map(ids, function(id) {
-        return idHandler.formatId(id, '%w');
+        return idHandler.formatId(id, '%s-%w').replace('-', '.');
       });
-      var fakeId = '##' + sId + '.' + sourceIds.join(',') + '##\n\n';
+      var fakeId = '##' + sourceIds.join(';') + '##\n\n';
       var strings = '#!# ' + state.toTokenStrings(ids) + ' #!#\n\n';
       comment.comment = fakeId + strings + comment.comment;
     }
