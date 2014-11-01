@@ -4,6 +4,7 @@ angular.module('arethusa', [
   'angulartics.google.analytics',
   'mm.foundation',
   'ngRoute',
+  'angular-loading-bar',
   'arethusa.core',
   'arethusa.contextMenu',
   'arethusa.history'
@@ -12,16 +13,24 @@ angular.module('arethusa', [
 angular.module('arethusa').config([
   '$routeProvider',
   '$translateProvider',
+  'cfpLoadingBarProvider',
   'LOCALES',
   'MAIN_ROUTE',
   'LANDING',
-  function ($routeProvider, $translateProvider,
+  function ($routeProvider, $translateProvider, cfpLoadingBarProvider,
             LOCALES, MAIN_ROUTE, LANDING) {
+
+    cfpLoadingBarProvider.includeSpinner = false;
+
     if (aU.isArethusaMainApplication()) {
       $routeProvider.when('/', LANDING);
       //$routeProvider.when('/conf_editor', CONF_ROUTE);
       $routeProvider.when('/:conf', MAIN_ROUTE);
       //$routeProvider.when('/conf_editor/:conf', CONF_ROUTE);
+
+      cfpLoadingBarProvider.latencyThreshold = 400;
+    } else {
+      cfpLoadingBarProvider.includeBar = false;
     }
 
     var localesMap = {};
