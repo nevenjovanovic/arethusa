@@ -20,6 +20,7 @@ angular.module('arethusa.anaphora').service('anaphora', [
 
     function Anaphora() {
       this.targetId = undefined;
+      this.referencedBy = [];
     }
 
     function addContainer() {
@@ -29,15 +30,35 @@ angular.module('arethusa.anaphora').service('anaphora', [
     }
 
     var clickActionName = 'co-reference';
+    var targetAttribute = 'anaphora.targetId';
 
     function clickAction(targetId) {
       state.doBatched(function() {
         angular.forEach(state.clickedTokens, function(type, id) {
           var token = state.getToken(id);
-          state.change(token, 'anaphora.targetId', targetId);
+          state.change(token, targetAttribute, targetId);
         });
       });
     }
+
+    function removeOldReference(refId, targetId) {
+      if (!targetId) return;
+      var token = state.getToken(targetId);
+      var refs  = token.anaphora.referencedBy;
+      refs.splice(refs.indexOf(refId), 1);
+    }
+
+    function addNewReference(refId, targetId) {
+      if (!targetId) return;
+      var token = state.getToken(targetId);
+      token.anaphora.referencedBy.push(refId);
+    }
+
+    state.watch(targetAttribute, function(newVal, oldVal, event) {
+      var referenceId = event.token.id;
+      removeOldReference(referenceId, oldVal);
+      addNewReference(referenceId, newVal);
+    });
 
     this.changeAnaphora = clickAction;
 
