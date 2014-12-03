@@ -14,6 +14,7 @@ var confPath = 'app/static/configs';
 var devMode = process.env.DEV;
 
 var arethusaModules = [
+  "arethusa.anaphora",
   "arethusa.constituents",
   'arethusa.morph',
   'arethusa.artificial_token',
