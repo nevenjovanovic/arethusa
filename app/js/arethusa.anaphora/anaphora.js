@@ -9,7 +9,9 @@ angular.module('arethusa.anaphora').service('anaphora', [
     this.name = 'anaphora';
 
     this.defaultConf = {
-      template: 'templates/arethusa.anaphora/anaphora.html'
+      template: 'templates/arethusa.anaphora/anaphora.html',
+      contextMenu: true,
+      contextMenuTemplate: 'templates/arethusa.anaphora/context_menu.html'
     };
 
     function configure() {
@@ -36,6 +38,8 @@ angular.module('arethusa.anaphora').service('anaphora', [
         });
       });
     }
+
+    this.changeAnaphora = clickAction;
 
     globalSettings.addClickAction(clickActionName, clickAction);
 
