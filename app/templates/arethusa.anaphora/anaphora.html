@@ -1,1 +1,3 @@
-This is the HTML template for arethusa.anaphora
+<div ng-repeat="(id, _) in state.clickedTokens" ng-init="token = state.getToken(id)">
+  {{ token.string }} ⇒ {{ state.asString(token.anaphora.targetId )}}
+</div>
