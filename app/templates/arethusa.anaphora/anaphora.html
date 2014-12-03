@@ -1,3 +1,5 @@
 <div ng-repeat="(id, _) in state.clickedTokens" ng-init="token = state.getToken(id)">
   {{ token.string }} ⇒ {{ state.asString(token.anaphora.targetId )}}
+
+  {{ token.anaphora }}
 </div>

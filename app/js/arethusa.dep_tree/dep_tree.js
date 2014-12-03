@@ -226,7 +226,7 @@ angular.module('arethusa.depTree').service('depTree', [
       addMissingHeadsToState();
 
       if (self.mode === 'editor') {
-        globalSettings.setClickAction(clickActionName);
+        //globalSettings.setClickAction(clickActionName);
       }
     };
   }

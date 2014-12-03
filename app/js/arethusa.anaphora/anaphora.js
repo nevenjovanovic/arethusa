@@ -19,7 +19,8 @@ angular.module('arethusa.anaphora').service('anaphora', [
     }
 
     function Anaphora() {
-      this.targetId = undefined;
+      this.targetId  = undefined;
+      this.topTarget = undefined;
       this.referencedBy = [];
     }
 
@@ -54,15 +55,28 @@ angular.module('arethusa.anaphora').service('anaphora', [
       token.anaphora.referencedBy.push(refId);
     }
 
+    function dereferenceReference(token, targetToken) {
+      // Infinite loop!
+      //
+      //var topTarget = targetToken;
+      //while (topTarget.anaphora.targetId) {
+        //topTarget = state.getToken(topTarget.anaphora.targetId);
+      //}
+      //token.anaphora.topTarget = topTarget.id;
+    }
+
     state.watch(targetAttribute, function(newVal, oldVal, event) {
-      var referenceId = event.token.id;
+      var token = event.token;
+      var referenceId = token.id;
       removeOldReference(referenceId, oldVal);
       addNewReference(referenceId, newVal);
+      dereferenceReference(token, state.getToken(newVal));
     });
 
     this.changeAnaphora = clickAction;
 
     globalSettings.addClickAction(clickActionName, clickAction);
+    globalSettings.setClickAction(clickActionName);
 
     this.init = function() {
       configure();

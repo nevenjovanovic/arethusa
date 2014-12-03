@@ -2,11 +2,11 @@
   "main" : {
     "debug" : true,
     "showKeys" : true,
-    "@include" : "layouts/main.json",
+    "@include" : "layouts/perseids.json",
     "chunkParam" : "chunk",
     "retrievers" : {
       "TreebankRetriever" : {
-        "resource" : "fakePerseids",
+        "resource" : "localPerseids",
         "docIdentifier" : "treebank",
         "preselector" : "w"
       }
@@ -19,6 +19,7 @@
     },
     "plugins" : [
       "text",
+      "anaphora",
       "artificialToken",
       "search",
       "morph",
