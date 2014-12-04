@@ -3,8 +3,8 @@
   <select
     style="width: 8rem"
     class="compact"
-    ng-model="currentAction"
-    ng-change="gS.setClickAction(currentAction)"
+    ng-model="gS.clickAction"
+    ng-change="gS.setClickAction(gS.clickAction)"
     ng-options="k as k for (k, v) in gS.clickActions">
   </select>
 </label>
