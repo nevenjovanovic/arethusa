@@ -19,7 +19,7 @@ angular.module('arethusa.core').service('globalSettings', [
     var layoutChangeEvent = 'layoutChange';
     var clickActionChangeEvent = 'clickActionChange';
 
-
+    var translations = {};
 
     var confKeys = [
       "alwaysDeselect",
@@ -200,7 +200,13 @@ angular.module('arethusa.core').service('globalSettings', [
     function onClickActionChange() {
       // Need to translate
       $timeout(function() {
-        notifier.info(self.clickAction + ' click action active');
+        var msg;
+        if (self.clickAction === 'disabled') {
+          msg = 'Click action disabled';
+        } else {
+          msg = self.clickAction + ' click action active';
+        }
+        notifier.info(msg);
       });
     }
 
