@@ -16,6 +16,10 @@ angular.module('arethusa.core').service('globalSettings', [
     self.settings = {};
     self.colorizers = { disabled: true };
 
+    var layoutChangeEvent = 'layoutChange';
+    var clickActionChangeEvent = 'clickActionChange';
+
+
 
     var confKeys = [
       "alwaysDeselect",
@@ -109,7 +113,7 @@ angular.module('arethusa.core').service('globalSettings', [
         self.clickFn = actions[0];
         self.preClickFn = actions[1];
         if (!silent) {
-          $rootScope.$broadcast('clickActionChange');
+          $rootScope.$broadcast(clickActionChangeEvent);
         }
       }
     };
@@ -167,20 +171,47 @@ angular.module('arethusa.core').service('globalSettings', [
     // for this event.
     $rootScope.$on('confLoaded', loadLayouts);
 
+    // We usually do this during a layoutChange as well, but on initial
+    // startup no plugins will be available at this point, so we have to
+    // wait for this a bit.
+    $rootScope.$on('pluginsLoaded', lookUpClickAction);
+
     this.broadcastLayoutChange = function() {
       if (self.layout.grid) {
         $timeout(function() {
           notifier.warning('The grid layout is an experimental feature and WILL contain bugs!', 'WARNING');
         }, 1200);
       }
-      $rootScope.$broadcast('layoutChange', self.layout);
+      $rootScope.$broadcast(layoutChangeEvent, self.layout);
     };
+
+    function lookUpClickAction() {
+      var clickAction = self.layout.clickAction;
+      if (clickAction) {
+        var plugin = plugins.get(clickAction);
+        if (!angular.equals(plugin, {})) plugin.useClickAction();
+      }
+    }
+
+    function onLayoutChange(event) {
+      lookUpClickAction();
+    }
+
+    function onClickActionChange() {
+      // Need to translate
+      $timeout(function() {
+        notifier.info(self.clickAction + ' click action active');
+      });
+    }
+
+    $rootScope.$on(layoutChangeEvent, onLayoutChange);
+    $rootScope.$on(clickActionChangeEvent, onClickActionChange);
 
     this.init = function() {
       configure();
       self.addClickAction('disabled', self.defaultClickAction);
-      self.setClickAction('disabled', true);
+      // A layout might have set this already
+      if (!self.clickAction) self.setClickAction('disabled', true);
     };
-
   }
 ]);

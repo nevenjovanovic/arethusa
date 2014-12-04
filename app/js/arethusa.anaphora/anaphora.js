@@ -78,6 +78,12 @@ angular.module('arethusa.anaphora').service('anaphora', [
     globalSettings.addClickAction(clickActionName, clickAction);
     globalSettings.setClickAction(clickActionName);
 
+    this.useClickAction = function() {
+      if (self.mode === 'editor') {
+        globalSettings.setClickAction(clickActionName);
+      }
+    };
+
     this.init = function() {
       configure();
       addContainer();

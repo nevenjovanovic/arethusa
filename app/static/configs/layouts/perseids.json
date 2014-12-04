@@ -2,11 +2,13 @@
   "layouts" : [
     {
       "name" : "Sidepanel",
-      "template" : "templates/main_with_sidepanel.html"
+      "template" : "templates/main_with_sidepanel.html",
+      "clickAction" : "anaphora"
     },
     {
       "name" : "Grid",
       "template" : "templates/main_grid.html",
+      "clickAction" : "depTree",
       "grid" : [
 
         {
