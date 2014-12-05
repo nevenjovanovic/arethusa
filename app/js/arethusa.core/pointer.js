@@ -2,16 +2,20 @@
 
 angular.module('arethusa.core').service('pointer', [
   'state',
-  function(state) {
+  'notifier',
+  'translator',
+  function(state, notifier, translator) {
     var self = this;
     var modeClass = 'crosshair-cursor';
     var listener;
+    var trsls = {};
+    translator('pointer.defaultNotification', trsls, 'defaultMessage');
 
     function tokens() {
       return angular.element('[token]');
     }
 
-    function enterSelectMode(onSelection) {
+    function enterSelectMode(onSelection, msg) {
       self.active = true;
       state.deselectAll();
       tokens().addClass(modeClass);
@@ -24,6 +28,7 @@ angular.module('arethusa.core').service('pointer', [
         state.deselectAll();
         leaveSelectMode();
       });
+      notifier.info(msg || trsls.defaultMessage);
     }
 
     function leaveSelectMode() {
