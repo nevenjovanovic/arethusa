@@ -207,6 +207,7 @@ angular.module('arethusa.core').service('state', [
         if (type !== 'hover') {
           self.clickedTokens[id] = type;
         }
+        self.broadcast('tokenSelected', id, type);
       }
     };
 
@@ -228,6 +229,7 @@ angular.module('arethusa.core').service('state', [
       if (self.selectionType(id) === type) {
         delete self.selectedTokens[id];
         delete self.clickedTokens[id];
+        self.broadcast('tokenDeselected', id, type);
       }
     };
 
@@ -246,6 +248,7 @@ angular.module('arethusa.core').service('state', [
         delete self.selectedTokens[el];
         delete self.clickedTokens[el];
       }
+      self.broadcast('allTokensDeselected');
     };
 
     this.firstSelected = function() {
