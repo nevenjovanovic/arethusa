@@ -2,17 +2,13 @@
 
 angular.module('arethusa.artificialToken').directive('artificialTokenInsertionPointer', [
   'artificialToken',
-  'state',
+  'pointer',
   'translator',
-  function(artificialToken, state, translator) {
+  function(artificialToken, pointer, translator) {
     return {
       restrict: 'A',
       scope: {},
       link: function(scope, element, attrs) {
-        var modeClass = 'crosshair-cursor';
-        var selectMode;
-        var watch;
-
         scope.aT = artificialToken;
 
         var trsl = {};
@@ -38,42 +34,18 @@ angular.module('arethusa.artificialToken').directive('artificialTokenInsertionPo
           return angular.element('[token]');
         }
 
-        scope.state = state;
-
-        scope.enterSelectMode = function() {
-          selectMode = true;
-          state.deselectAll();
-          tokens().addClass(modeClass);
-          setWatch();
-        };
-
         scope.toggleDir = function() {
           scope.aT.insertBehind = !scope.aT.insertBehind;
           setInsertDirText();
         };
 
-        function leaveSelectMode() {
-          selectMode = false;
-          tokens().removeClass(modeClass);
-          watch(); // to deregister
+        function setInsertionPoint(id, token) {
+          artificialToken.model.insertionPoint = token;
         }
 
-        function setInsertionPoint(id) {
-          artificialToken.model.insertionPoint = state.getToken(id);
-        }
-
-        function setWatch() {
-          watch = scope.$watchCollection('state.selectedTokens', function(newVal, oldVal) {
-            for (var id in newVal) {
-              if (newVal[id] === 'click') {
-                setInsertionPoint(id);
-                state.deselectAll();
-                leaveSelectMode();
-                break;
-              }
-            }
-          }, true);
-        }
+        scope.selectInsertionPoint = function() {
+          pointer.findTarget(setInsertionPoint);
+        };
 
         scope.$watch('aT.model.insertionPoint', function(newVal, oldVal) {
           scope.insertionPoint = newVal;
