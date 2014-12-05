@@ -204,10 +204,12 @@ angular.module('arethusa.core').service('state', [
 
       if (self.isSelectable(self.selectionType(id), type)) {
         self.selectedTokens[id] = type;
-        if (type !== 'hover') {
+        if (type === 'hover') {
+          self.broadcast('tokenHovered', id);
+        } else {
           self.clickedTokens[id] = type;
+          self.broadcast('tokenClicked', id);
         }
-        self.broadcast('tokenSelected', id, type);
       }
     };
 
@@ -229,7 +231,7 @@ angular.module('arethusa.core').service('state', [
       if (self.selectionType(id) === type) {
         delete self.selectedTokens[id];
         delete self.clickedTokens[id];
-        self.broadcast('tokenDeselected', id, type);
+        self.broadcast('tokenDeselected', id);
       }
     };
 
