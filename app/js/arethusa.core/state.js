@@ -438,7 +438,7 @@ angular.module('arethusa.core').service('state', [
     };
 
     this.on = function(event, fn) {
-      $rootScope.$on(event, fn);
+      return $rootScope.$on(event, fn);
     };
 
     this.broadcast = function(event, arg) {
