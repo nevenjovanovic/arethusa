@@ -4,7 +4,8 @@ angular.module('arethusa.anaphora').service('anaphora', [
   'state',
   'configurator',
   'globalSettings',
-  function(state, configurator, globalSettings) {
+  'pointer',
+  function(state, configurator, globalSettings, pointer) {
     var self = this;
     this.name = 'anaphora';
 
@@ -74,6 +75,9 @@ angular.module('arethusa.anaphora').service('anaphora', [
     });
 
     this.changeAnaphora = clickAction;
+    this.selectAnaphora = function() {
+      pointer.findTarget(clickAction);
+    };
 
     globalSettings.addClickAction(clickActionName, clickAction);
     globalSettings.setClickAction(clickActionName);
