@@ -46,12 +46,30 @@ angular.module('arethusa.core').service('idHandler', [
       this.sourceId   = sourceId;
     }
 
+    function MasterMap() {
+      var mappings = {};
+      this.add = function(internalId, identifier, map) {
+        var maps = mappings[internalId];
+        if (!maps) maps = mappings[internalId] = {};
+        maps[identifier] = map;
+      };
+
+      this.get = function(internalId) {
+        return mappings[internalId] || {};
+      };
+    }
+
+    var masterMap = new MasterMap();
+    this.masterMap = masterMap;
+
     this.Map = function() {
       var self = this;
       this.mappings = {};
 
       this.add = function(identifier, internalId, sourceId) {
-        self.mappings[identifier] = new IdMapping(internalId, sourceId);
+        var mapping = new IdMapping(internalId, sourceId);
+        self.mappings[identifier] = mapping;
+        masterMap.add(internalId, identifier, mapping);
       };
 
       this.sourceId = function(identifier) {

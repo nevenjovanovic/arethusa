@@ -169,10 +169,12 @@ angular.module('arethusa.core').service('state', [
     this.selectedTokens = {};
     this.clickedTokens  = {};
 
+    // TODO Makes this a variable!!
     this.hasSelections = function() {
       return Object.keys(self.selectedTokens).length !== 0;
     };
 
+    // TODO Makes this a variable!!
     this.hasClickSelections = function() {
       return Object.keys(self.clickedTokens).length;
     };
