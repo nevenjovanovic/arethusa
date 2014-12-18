@@ -553,7 +553,9 @@ angular.module('arethusa.core').service('state', [
      * @methodOf arethusa.core.state
      *
      * @description
-     * Delegates to `$rootScope.$on`.
+     * Delegates to `$rootScope.$on`. This is convenient when a plugin
+     * needs to send such an event, without a having to inject `$rootScope`
+     * directly.
      *
      * @param {String} event The eventname
      * @param {Function} fn Callback function
@@ -569,7 +571,9 @@ angular.module('arethusa.core').service('state', [
      * @methodOf arethusa.core.state
      *
      * @description
-     * Delegates to `$rootScope.broadcast`.
+     * Delegates to `$rootScope.$broadcast`. This is convenient when a plugin
+     * needs to send such an event, without a having to inject `$rootScope`
+     * directly.
      *
      * @param {String} event The eventname
      * @param {*} [arg] Optional argument transmitted alongside the event
