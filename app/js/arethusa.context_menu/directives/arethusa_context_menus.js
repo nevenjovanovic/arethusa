@@ -12,10 +12,13 @@ angular.module('arethusa.contextMenu').directive('arethusaContextMenus', [
         scope.fullId = function(token) {
           return token.sentenceId + token.id;
         };
+
+        scope.$on('contextMenuOpened', function(event, token) {
+          scope.token = token;
+        });
       },
       template: '\
-        <arethusa-context-menu\
-          ng-repeat="(id, token) in tokens track by id"\
+        <arethusa-context-menu \
           plugins="plugins"\
           token-obj="token">\
         </arethusa-context-menu>\

@@ -4,9 +4,10 @@ angular.module('arethusa.contextMenu').factory('menuElement', function () {
 }).directive('contextMenu', [
   '$document',
   '$parse',
+  '$rootScope',
   'menuElement',
   'keyCapture',
-  function ($document, $parse, menuElement, keyCapture) {
+  function ($document, $parse, $rootScope, menuElement, keyCapture) {
     return {
       restrict: 'A',
       scope: {
@@ -37,6 +38,7 @@ angular.module('arethusa.contextMenu').factory('menuElement', function () {
         }
 
         function open(event, menu, parent) {
+          $rootScope.$broadcast('contextMenuOpened', scope.menuObj);
           menu.addClass('menu-open');
           menu.css('display', 'inline-block');
 
@@ -121,7 +123,7 @@ angular.module('arethusa.contextMenu').factory('menuElement', function () {
           }
 
           // Find the context menu in the DOM
-          menuElement.element = angular.element(document.getElementById(attrs.menuId));
+          menuElement.element = angular.element(document.getElementById('christof'));
 
           // Disable the browser's default context menu
           event.preventDefault();
