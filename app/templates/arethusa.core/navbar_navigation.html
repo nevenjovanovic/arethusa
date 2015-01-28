@@ -28,22 +28,29 @@
   </li>
   <li>
     <div>
-      <ul class="navigation has-dropdown">
-        <li>
-          <a>
+      <ul class="navigation">
+        <li class="has-dropdown">
+          <a >
             {{ ids }}
           </a>
           <ul>
-              <li>
-                <form ng-submit="goTo(goToLocation)">
-                  <input class="inline" type="text" ng-model="goToLocation"/>
-                </form>
+            <li class="">
+            <form ng-submit="goTo(goToLocation)">
+              <div class="row">
+                <div class="small-3 columns">
+                  <label class="right inline" for="goToLocation">Go to</label>
+                </div>
+                <div class="small-9 columns">
+                  <input type="text" id="goToLocation" ng-model="goToLocation" placeholder="Go to"/>
+                </div>
+              </div>
+            </form>
+            </li>
+            <li>
+            <a sentence-list translate="list"
+              title="{{ trsls.list(keys) }}" />
               </li>
-              <li>
-                <a sentence-list translate="list"
-                  title="{{ trsls.list(keys) }}"/>
-              </li>
-          </ul>
+            </ul>
         </li>
       </ul>
     </div>
