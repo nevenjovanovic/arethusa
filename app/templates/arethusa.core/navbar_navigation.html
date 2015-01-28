@@ -28,23 +28,21 @@
   </li>
   <li>
     <div>
-      <ul class="navigation">
+      <ul class="navigation has-dropdown">
         <li>
           <a>
             {{ ids }}
           </a>
           <ul>
-            <div class="navigation-menu small-12 large-12 columns">
-              <div>
+              <li>
                 <form ng-submit="goTo(goToLocation)">
                   <input class="inline" type="text" ng-model="goToLocation"/>
                 </form>
-              </div>
-              <div>
+              </li>
+              <li>
                 <a sentence-list translate="list"
                   title="{{ trsls.list(keys) }}"/>
-              </div>
-            </div>
+              </li>
           </ul>
         </li>
       </ul>
