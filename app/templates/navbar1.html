@@ -1,16 +1,23 @@
-<div class="fixed">
-  <nav class="top-bar" data-topbar>
-    <ul class="title-area">
-      <li class="name">
-      <h1><a href="#"><img ng-src="{{ logo }}"/></a></h1>
-      </li>
+<nav class="top-bar" data-topbar>
+  <section class="top-bar-section">
+    <ul class="left">
+      <li><a dropdown-toggle="#signin">Sign In</a></li>
     </ul>
-    <section class="top-bar-section">
-      <ul navbar-search/>
-      <ul navbar-navigation/>
-      <ul navbar-buttons class="right"/>
-    </section>
-  </nav>
+  </section>
+</nav>
+<div id="signin" class="f-dropdown small content" data-dropdown-content="true">
+  <h5>Log In:</h5>
+  <form id="top-nav-login" action="login.xqy" method="post">
+    <div class="row">
+      <label>Email Address</label>
+      <input type="email" name="email" placeholder="email@example.com" tabindex="1"/>
+    </div>
+    <div class="row">
+      <label>Password</label>
+      <input type="password" name="email" placeholder="********" tabindex="2"/>
+    </div>
+    <div class="row">
+      <input type="submit" class="button tiny success" value="Login" tabindex="3"/>
+    </div>
+  </form>
 </div>
-<div help-panel class="hide row panel"/>
-<div global-settings-panel class="hide row panel"/>
